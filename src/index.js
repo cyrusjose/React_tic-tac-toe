@@ -1,3 +1,8 @@
+// React tutorial site
+// https://reactjs.org/tutorial/tutorial.html#prerequisites
+
+// Currently on the section: Developer Tools
+
 import React from "react";
 import ReactDOM, { render } from "react-dom";
 import "./index.css";
@@ -5,14 +10,30 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
 class Square extends React.Component {
+  // This will initialize the state
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null
+    };
+  }
   render() {
-    return <button className="square">{/* TO DO */}</button>;
+    return (
+      <button
+        className="square"
+        onClick={() => {
+          this.setState({ value: "X" });
+        }}
+      >
+        {this.state.value}
+      </button>
+    );
   }
 }
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square />;
+    return <Square value={i} />;
   }
 
   render() {
