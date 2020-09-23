@@ -21,14 +21,13 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      square: Array(9).fill(null),
+      squares: Array(9).fill(null),
       xIsNext: true
     };
   }
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    // Is the state of xIsNext true? If it is then mark X else mark O
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({ squares: squares, xIsNext: !this.state.xIsNext });
   }
@@ -47,7 +46,7 @@ class Board extends React.Component {
 
     return (
       <div>
-        <div className="status"> {status}</div>
+        <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -77,14 +76,17 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{/* status */}</div>
-          <ol>{/* TO DO */}</ol>
+          <ol>{/* TODO */}</ol>
         </div>
       </div>
     );
   }
 }
 
+// ========================================
+
 ReactDOM.render(<Game />, document.getElementById("root"));
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
