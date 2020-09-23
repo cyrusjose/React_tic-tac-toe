@@ -1,7 +1,7 @@
 // React tutorial site
 // https://reactjs.org/tutorial/tutorial.html#prerequisites
 
-// Currently on the section: Developer Tools
+// Currently on the section: Adding time travel
 
 import React from "react";
 import ReactDOM, { render } from "react-dom";
@@ -102,7 +102,7 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === sqaures[b] && squares[a] === sqaures[c])
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
       return squares[a];
   }
   return null;
