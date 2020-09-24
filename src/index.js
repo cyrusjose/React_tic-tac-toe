@@ -1,5 +1,5 @@
 // React tutorial site
-// https://reactjs.org/tutorial/tutorial.html#prerequisites
+// https://reactjs.org/tutorial/tutorial.html#adding-time-travel
 
 // Currently on the section: Adding time travel
 
