@@ -4,10 +4,12 @@
 // Currently on the section: Adding time travel
 
 import React from "react";
-import ReactDOM, { render } from "react-dom";
+import ReactDOM from "react-dom";
 import "./index.css";
 // import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+
+// =================== Square Component ===================
 
 function Square(props) {
   return (
@@ -17,25 +19,10 @@ function Square(props) {
   );
 }
 
-class Board extends React.Component {
-  handleClick(i) {
-    const history = this.state.history;
-    const current = histor[history.length - 1];
-    // Slice creates a new copy of the squares array so that
-    const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) return;
-    squares[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      // we use concat instead of push because concat doesn't mutate the orginal array.
-      history: history.concat([
-        {
-          squares: squares
-        }
-      ]),
-      xIsNext: !this.state.xIsNext
-    });
-  }
+// =================== Board Component ===================
 
+class Board extends React.Component {
+  
   renderSquare(i) {
     return (
       <Square
@@ -46,13 +33,6 @@ class Board extends React.Component {
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
-    let status;
-    if (winner) {
-      status = `Winner: ${winner}`;
-    } else {
-      status = `Next player: ${this.state.xIsNext ? "X" : "O"}`;
-    }
     return (
       <div>
         <div className="board-row">
@@ -75,6 +55,7 @@ class Board extends React.Component {
   }
 }
 
+// =================== Game Component ===================
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +68,33 @@ class Game extends React.Component {
       xIsNext: true
     };
   }
+
+  handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      history: history.concat([{
+        squares: squares
+      }]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+
   render() {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const winner = calculateWinner(current.squares);
+    let status;
+    if (winner) {
+      status = `Winner: ${winner}`;
+    } else {
+      status = `Next player: ${this.state.xIsNext ? "X" : "O"}`;
+    }
     return (
       <div className="game">
         <div className="game-board">
