@@ -22,7 +22,6 @@ function Square(props) {
 // =================== Board Component ===================
 
 class Board extends React.Component {
-  
   renderSquare(i) {
     return (
       <Square
@@ -76,12 +75,14 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      history: history.concat([{
-        squares: squares
-      }]),
-      xIsNext: !this.state.xIsNext,
+      history: history.concat([
+        {
+          squares: squares
+        }
+      ]),
+      xIsNext: !this.state.xIsNext
     });
   }
 
@@ -89,6 +90,17 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[history.length - 1];
     const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+      const desc = move ? `Go to move # ${move}` : `Go to game start`;
+      return (
+        // each past move has a a unique ID associated with it. 
+        // The moves are never re-ordered, deleted, or inserted in the middle so it's safe to use the move index as a key.
+        <li key={move}>
+          <button onClick={() => this.jumpTo(move)}> {desc}</button>
+        </li>
+      );
+    });
     let status;
     if (winner) {
       status = `Winner: ${winner}`;
@@ -102,7 +114,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
