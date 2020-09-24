@@ -64,12 +64,15 @@ class Game extends React.Component {
           squares: Array(9).fill(null)
         }
       ],
+      stepNumber: 0,
       xIsNext: true
     };
   }
 
   handleClick(i) {
-    const history = this.state.history;
+    // This ensures that if we 'go back in time' and make a new move from that point, we discard all 'future' histroy. 
+    // This essentially means that we will start over from the point we choose.
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
@@ -82,7 +85,17 @@ class Game extends React.Component {
           squares: squares
         }
       ]),
+      // This ensures that we don't show the same move after a new one has been made.
+      stepNumber: history.length,
       xIsNext: !this.state.xIsNext
+    });
+  }
+
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      // Since the game is about taking turns, remember that the current player's previous step is two moves prior.
+      xIsNext: step % 2 === 0
     });
   }
 
@@ -94,7 +107,7 @@ class Game extends React.Component {
     const moves = history.map((step, move) => {
       const desc = move ? `Go to move # ${move}` : `Go to game start`;
       return (
-        // each past move has a a unique ID associated with it. 
+        // each past move has a a unique ID associated with it.
         // The moves are never re-ordered, deleted, or inserted in the middle so it's safe to use the move index as a key.
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}> {desc}</button>
