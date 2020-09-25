@@ -3,14 +3,14 @@
 
 // Currently on the section: Adding time travel
 
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 // import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 // =================== Square Component ===================
-
+// The capitalized letter will let react know to create a component.
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -55,6 +55,42 @@ class Board extends React.Component {
 }
 
 // =================== Game Component ===================
+/*
+function Game(props) {
+  const [squares, setSquares] = useState(array(9).fill(null)) 
+  const [stepNumber, setStepNumber] = useState(0)
+  const [xIsNext, setXIsNext] = useState(true)
+
+  function handleClick(i) {
+    // This ensures that if we 'go back in time' and make a new move from that point, we discard all 'future' histroy.
+    // This essentially means that we will start over from the point we choose.
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? "X" : "O";
+    this.setState({
+      history: history.concat([
+        {
+          squares: squares
+        }
+      ]),
+      // This ensures that we don't show the same move after a new one has been made.
+      stepNumber: history.length,
+      xIsNext: !this.state.xIsNext
+    });
+  }
+
+  function jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      // Since the game is about taking turns, remember that the current player's previous step is two moves prior.
+      xIsNext: step % 2 === 0
+    });
+  }
+}*/
 class Game extends React.Component {
   constructor(props) {
     super(props);
